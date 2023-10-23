@@ -4,7 +4,7 @@ require 'app/lib/Dev.php';
 
 use app\core\Router;
 
-spl_autoload_register(function ($class) {
+spl_autoload_register(function ($class): ?string {
     $path = str_replace('\\', '/', $class . '.php');
     if (file_exists($path)) {
         require $path;
@@ -15,7 +15,4 @@ spl_autoload_register(function ($class) {
 session_start();
 
 $router = new Router();
-
-$b = 33;
-
 $router->run();

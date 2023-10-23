@@ -7,6 +7,9 @@ class View {
     public array $route;
     public string $layout = 'default';
 
+    /**
+     * @param array $route
+     */
     public function __construct(array $route)
     {
         $this->route = $route;
@@ -15,6 +18,9 @@ class View {
 
     /**
      * @noinspection PhpUnusedParameterInspection
+     * @param string $title
+     * @param array $vars
+     * @return void
      */
     public function render(string $title, array $vars = []): void
     {
@@ -26,12 +32,14 @@ class View {
             $content = ob_get_clean();
             require 'app/views/layout/' . $this->layout . '.php';
         } else {
-            echo 'View: ' . strtoupper($path) . ' not found!';
+            View::errorCode(404);
         }
     }
 
     /**
      * @noinspection PhpUnused
+     * @param string $url
+     * @return void
      */
     public function redirect(string $url): void
     {
@@ -47,5 +55,26 @@ class View {
             require $path;
         }
         exit();
+    }
+
+    /**
+     * @noinspection PhpUnused
+     * @param string $status
+     * @param string $message
+     * @return void
+     */
+    public function message(string $status, string $message): void
+    {
+        exit(json_encode(['status' => $status, 'message' => $message]));
+    }
+
+    /**
+     * @noinspection PhpUnused
+     * @param string $url
+     * @return void
+     */
+    public function location(string $url): void
+    {
+        exit(json_encode(['url' => $url]));
     }
 }

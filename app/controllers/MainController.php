@@ -11,9 +11,14 @@ class MainController extends AbstractController
 {
     /**
      * @noinspection PhpUnused
+     * @return void
      */
     public function indexAction(): void
     {
-        $this->view->render('PHP MVC Framework');
+        $result = $this->model->getNews();
+        $vars = [
+            'news' => $result,
+        ];
+        $this->view->render('PHP MVC Framework', $vars);
     }
 }
